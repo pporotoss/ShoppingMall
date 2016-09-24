@@ -1,0 +1,153 @@
+<%@page import="com.shoppingmall.admin.model.Notice"%>
+<%@page import="common.page.PagingBean"%>
+<%@page import="java.util.List"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	List<Notice> list = (List)request.getAttribute("list");
+	PagingBean pb = (PagingBean)request.getAttribute("pb");
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자 페이지</title>
+<!-- CKEditor -->
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script src="../jslib/common.js"></script>
+<script>
+	function del(){
+		
+		var chkcount = 0;
+		
+		// 상품체크여부확인
+		if(noticeForm.notice_id.length == ""){
+			if(noticeForm.notice_id.checked){
+				chkcount++;
+			}
+		}
+		
+		
+		for(var i = 0; i < noticeForm.notice_id.length; i++){
+			if(noticeForm.notice_id[i].checked){
+				chkcount++;
+			}
+		}
+		
+		if(chkcount == 0){
+			alert("삭제할 상품을 선택해 주세요.");
+			return;
+		}
+		
+		
+		if(!confirm('삭제하시겠습니까?')){
+			return;
+		}
+		
+		
+		noticeForm.action = "/admin/noticeDelete.do";
+		noticeForm.method="post";
+		noticeForm.submit();
+	}
+	
+	// 글쓰기페이지로 이동
+	function writeNotice(){
+		
+		location.href="/admin/write.jsp"		
+	}
+</script>
+</head>
+
+<body>
+	<!-- 상단 메뉴 -->
+	<%@ include file="/include/adminTopNav.jsp"%>
+	<!-- 좌측메뉴 -->
+	<%@ include file="/include/adminSideNav.jsp" %>
+
+	<!-- 본문영역 -->
+	<div class="container">
+		<h2 align="center">공지사항</h2>
+		<div class="table-responsive">
+		<form name="noticeForm">
+			<table class="table table-hover table-condensed" width="80%">
+				<thead>
+					<tr align="center">
+						<th width="5%">#</th>						
+						<th width="5%">번 호</th>
+						<th width="40%">제 목</th>
+						<th width="10%">작성자</th>
+						<th width="20%">작성일</th>
+						<th width="5%">조회수</th>
+					</tr>
+				</thead>
+				<!-- 테이블 본문 -->
+				<tbody>
+					<%
+						int curPos = pb.getCurPos();
+						int num = pb.getNum();
+					%>
+					<%for(int i = 0; i < pb.getPageSize(); i++){ %>
+						<%if(num < 1)break; %>
+						<% Notice dto = list.get(curPos++); %>
+					<tr>
+						<td>
+								<input type="checkbox" name="notice_id" value="<%=dto.getNotice_id()%>">
+						</td>
+						<td align="center"><%=num-- %></td>
+						<td><a href="/admin/notice_detail.do?notice_id=<%=dto.getNotice_id()%>"><%=dto.getTitle() %></a></td>
+						<td><%=dto.getWriter() %></td>
+						<td><%=dto.getRegdate() %></td>
+						<td align="center"><%=dto.getHit() %></td>
+					</tr>
+					<%} %>
+				</tbody>
+			</table>
+		</form>
+			<!-- 삭제버튼 -->
+			<div>
+				<input type="button" class="btn btn-default" value="글쓰기" onClick="writeNotice()">
+				<input type="button" class="btn btn-default" value="삭제" onClick="del()">
+			</div>
+		</div>
+		<!-- 페이징 -->
+		<div align="center">
+			<ul class="pagination">
+	            	<%
+	            		int blockSize = pb.getBlockSize();
+	            		int firstPage = pb.getFirstPage();
+	            		int lastPage = pb.getLastPage();
+	            		int totalPage = pb.getTotalPage();
+	            	%>
+	            <li>
+	            <%if(firstPage-1 > 0){ %>
+	            	<a href="/admin/list.do?currentPage=<%=firstPage-1 %>">
+	            <%}else{ %>
+	            	<a href="javascript:alert('첫번째 페이지 입니다!!')">
+	            <%} %>
+	            <span class="glyphicon glyphicon-chevron-left"></span></a></li>
+	            <!-- if currentPage 하고 같으면 active하기. -->
+	            	<%for(int i = firstPage; i <= lastPage; i++){ %>
+	            		<%if(i > totalPage)break; %>
+	            		<%if(pb.getCurrentPage() == i){ %>
+	            			<li class="active">
+	            		<%}else{ %>
+	            			<li>
+	            		<%} %>
+	            		<a href="/admin/list.do?currentPage=<%=i %>"><%=i %></a></li>
+	            	<%} %>
+	            
+	            <li>
+	            	<%if(lastPage+1 < totalPage){ %>
+	            		<a href="/admin/list.do?currentPage=<%=lastPage+1 %>">
+	            	<%}else{ %>
+	            		<a href="javascript:alert('마지막 페이지 입니다!!')">
+	            	<%} %>
+	            <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+	          </ul>
+          </div>
+	</div>
+
+	<!-- 부트스트랩 관련 불러오기!! -->
+	<%@ include file="/include/loadBootStrap.jsp"%>
+</body>
+</html>

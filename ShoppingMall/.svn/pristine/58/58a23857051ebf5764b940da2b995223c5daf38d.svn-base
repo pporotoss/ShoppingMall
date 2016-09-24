@@ -1,0 +1,27 @@
+package com.shoppingmall.product.model;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class EventProductDAOImpl implements EventProductDAO{
+	
+	@Autowired
+	SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	public void insert(int product_id, int eventinfo_id) {
+		EventProduct1 eventProduct = new EventProduct1();
+		eventProduct.setProduct_idd(product_id);
+		eventProduct.setEventinfo_id(eventinfo_id);
+		sqlSessionTemplate.insert("EventProduct.insertEvent", eventProduct);
+	}
+
+	@Override
+	public void delete(int product_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

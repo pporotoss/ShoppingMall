@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Product">
+
+	<resultMap type="Product" id="ProductResult">
+		<id property="product_id" column="product_id"/>
+		<result property="product_name" column="product_name"/>
+		<result property="price" column="price"/>
+		<result property="discount" column="discount"/>
+		<result property="point" column="point"/>
+		<result property="stock" column="stock"/>
+		<result property="filename" column="filename"/>
+		<result property="regdate" column="regdate"/>
+		<result property="subcategory_id" column="subcategory_id"/>
+		<result property="nation_id" column="nation_id"/>
+		<result property="nation_name" column="nation_name"/>
+		<result property="brand_id" column="brand_id"/>
+		<result property="brand_name" column="brand_name"/>
+		<collection property="panelSize" javaType="List" ofType="PanelSize" resultMap="PanelSizeResult"/>
+	</resultMap>
+	<resultMap type="PanelSize" id="PanelSizeResult">
+		<id property="panelsize_id" column="panelsize_id"/>
+		<result property="name" column="name"/>	
+	</resultMap>
+	
+	<!-- 전부 불러오기 -->
+	<select id="selectAll" resultMap="ProductResult">
+		select p.product_id as product_id, product_name, price, discount, point, stock, filename, detail, b.brand_id as brand_id, n.nation_id as nation_id,  subcategory_id, regdate, d.panelsize_id as panelsize_id, s.name as name, b.name as brand_name, n.name as nation_name
+		from product p, panelsize s, productsize d, brand b, nation n
+		where p.product_id = d.product_id and s.panelsize_id = d.panelsize_id and p.brand_id = b.brand_id and p.nation_id = n.nation_id
+		order by product_id desc
+	</select>
+	
+	<!-- 상품 등록 -->
+	<insert id="insert" parameterType="Product">
+		<selectKey keyProperty="product_id" order="AFTER" resultType="int">
+			select seq_product.currval from dual
+		</selectKey>
+		insert into product(product_id, product_name, price, discount, point, stock, filename, detail, brand_id, nation_id,  subcategory_id)
+		values(seq_product.nextval, #{product_name}, #{price}, #{discount}, #{point}, #{stock}, #{filename}, #{detail}, #{brand_id}, #{nation_id}, #{subcategory_id})
+	</insert>
+	
+	<!-- 상품삭제 -->
+	<delete id="delete" parameterType="int">
+		delete from product where product_id=#{product_id}
+	</delete>
+	
+	<!-- 한건 불러오기 -->
+	<select id="selectOne" parameterType="int" resultMap="ProductResult">
+		select p.product_id as product_id, product_name, price, discount, point, stock, filename, detail, b.brand_id as brand_id, n.nation_id as nation_id,  subcategory_id, regdate, d.panelsize_id as panelsize_id, s.name as name, b.name as brand_name, n.name as nation_name
+		from product p, panelsize s, productsize d, brand b, nation n
+		where p.product_id = d.product_id and s.panelsize_id = d.panelsize_id and p.brand_id = b.brand_id and p.nation_id = n.nation_id and p.product_id=#{product_id}
+		order by product_id desc
+	</select>
+</mapper>

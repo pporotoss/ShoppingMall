@@ -1,0 +1,11 @@
+package com.shoppingmall.admin.service;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import com.shoppingmall.admin.model.Admin;
+
+public interface AdminService {
+	public List login(Admin admin, HttpSession session);
+}

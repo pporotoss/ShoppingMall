@@ -1,0 +1,78 @@
+
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>어드민 관리패널</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ </head>
+ <body>
+ <div class="container">
+ <hr />
+  <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="tab" href="#menu0">제품등록</a></li>
+    <li><a data-toggle="tab" href="#menu1">인기상품</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="menu0" class="tab-pane fade in active">
+		  <form action="/insert" method="post">
+			  <fieldset>
+				<legend>제품등록</legend>
+				<label for="ex1">제품명</label><input class="form-control" name="name" type="text">
+				<label for="ex2">가격</label><input class="form-control" name="price" type="number">
+				<label for="ex3">제작국가</label>
+			   <select class="form-control" id="sel1" name="nation">
+				<option>대한민국</option>
+				<option>USA</option>
+				<option>중국</option>
+				<option>캐나다</option>
+				<option>인도</option>
+			  </select>
+				<button type="submit" class="btn btn-primary">등록</button>
+			  </fieldset>
+		 </form>
+    </div>
+	<div id="menu1" class="tab-pane fade">
+     <fieldset>
+   <legend>인기상품</legend>
+	<% for (var i=0; i < 5; i++) {%>
+	<div class="row">
+		<div class="col-xs-2">
+		  <span class="thumbnail">
+			<img src="imgs/<%=i%>.jpg"style="width:100px;height:100px">
+			<p>제품명:</p>
+			<p>가격:</p>
+			<p>제작국가:</p>
+		  </span>
+			<select class="form-control" id="sel<%=i%>">
+			<% for (var j=0; j < 10; j++) {%>
+				<option><%=j%></option>
+			<%}%>
+			</select>
+		</div>
+	<%}%>
+	</fieldset>
+  </div>
+
+</div>
+<!--나눔-->
+ <hr/>
+  <form method="post">
+   <div class="container">
+    <fieldset>
+    <legend><%=data.shop_id %>번 제품수정</legend>
+		<label>고유번호</label><input class="form-control" name="id" type="text" value="<%=data.shop_id %>" disabled><br>
+		<label>제품명</label><input class="form-control" name="name" type="text" value="<%=data.name %>" ><br>
+		<label>가격</label><input class="form-control" name="price" type="number" value="<%=data.price %>"><br>
+		<label>제작국가</label><input class="form-control" name="nation" type="text" value="<%=data.nation %>"><br>
+		<button type="submit" class="btn btn-primary">완료</button>
+		<button type="button" class="btn btn-danger" onClick="history.back();">나가기</button>
+	</fieldset>
+	<p>
+   </div>
+  </form>
+ </body>
+</html>

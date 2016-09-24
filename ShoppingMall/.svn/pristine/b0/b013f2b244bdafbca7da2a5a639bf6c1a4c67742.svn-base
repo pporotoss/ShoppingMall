@@ -1,0 +1,89 @@
+package com.shoppingmall.admin.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.shoppingmall.admin.model.Admin;
+import com.shoppingmall.admin.model.AdminDAO;
+import com.shoppingmall.product.model.BrandDAO;
+import com.shoppingmall.product.model.NationDAO;
+import com.shoppingmall.product.model.PanelSizeDAO;
+import com.shoppingmall.product.model.SubCategoryDAO;
+import com.shoppingmall.product.model.TopCategoryDAO;
+
+import common.exception.DoNotLoginException;
+
+@Service
+public class AdminServiceImpl implements AdminService{
+	
+	@Autowired
+	@Qualifier("adminDAOImpl")
+	private AdminDAO adminDAO;
+	
+	@Autowired
+	@Qualifier("brandDAOImpl")
+	private BrandDAO brandDAO;
+	
+	@Autowired
+	@Qualifier("nationDAOImpl")
+	private NationDAO nationDAO;
+	
+	@Autowired
+	@Qualifier("panelSizeDAOImpl")
+	private PanelSizeDAO panelSizeDAO;
+	
+	@Autowired
+	@Qualifier("subCategoryDAOImpl")
+	private SubCategoryDAO subCategoryDAO;
+	
+	@Autowired
+	@Qualifier("topCategoryDAOImpl")
+	private TopCategoryDAO topCategoryDAO;
+	
+	
+	@Override
+	public void login(Admin admin, HttpSession session) throws DoNotLoginException{
+		
+		Admin result = adminDAO.select(admin);
+		if(result == null){
+			throw new DoNotLoginException("아이디,패스워드를 확인해주세요.");
+		}
+		session.setAttribute("admin", result);
+	}
+	
+	public Map registProduct(){
+		
+		Map allList = new HashMap();
+		
+		List brandList = brandDAO.selectAll();
+		allList.put("brandList", brandList);
+		
+		List nationList = nationDAO.selectAll();
+		allList.put("nationList", nationList);
+		
+		List panelSizeList = panelSizeDAO.selectAll();
+		allList.put("panelSizeList", panelSizeList);
+		
+		List topCategoryList = topCategoryDAO.selectAll();
+		allList.put("topCategoryList", topCategoryList);
+		
+		return allList;
+	}
+
+
+	/* 서브카테고리 얻어오기!! */
+	public List getSubCategory(int topCategory_id) {
+		
+		List subCategoryList = subCategoryDAO.selectAll(topCategory_id);
+
+		return subCategoryList;
+	}
+
+}

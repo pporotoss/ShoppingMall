@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductNation">
+
+	<insert id="insert" parameterType="ProductNation">
+		insert into productnation(productnation_id, product_id, nation_id)
+		values(seq_productnation.nextval, product_id=#{product_id},nation_id=#{nation_id})
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete from productnation where product_id=#{product_id}
+	</delete>
+</mapper>

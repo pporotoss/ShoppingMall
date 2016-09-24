@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EventProduct">
+	
+	<insert id="insertEvent" parameterType="EventProduct">
+ 		insert into eventproduct (product_id, eventproduct_id, eventinfo_id)
+ 		values ( #{product_idd}, seq_eventproduct.nextval, #{eventinfo_id})
+ 	</insert>
+ 	
+ 	<select id = "selectEvent" resultType="EventProduct" parameterType="int">
+ 		select eventproduct_id, product_id, eventinfo_id from eventproduct
+ 		where eventinfo_id=#{eventinfo_id}
+ 	</select>
+	
+	<delete id="eventDelete" parameterType="EventProduct">
+		delete from eventproduct where product_id=#{product_idd} and eventinfo_id=#{eventinfo_id}
+	</delete>
+	
+	<select id="dupleSelect" parameterType="EventProduct" resultType="EventProduct">
+		select * from eventproduct where product_id=#{product_idd} and eventinfo_id=#{eventinfo_id}
+	</select>
+	
+</mapper>

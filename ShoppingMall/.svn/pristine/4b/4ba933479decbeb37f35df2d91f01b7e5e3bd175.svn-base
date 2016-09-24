@@ -1,0 +1,276 @@
+package com.shoppingmall.admin.service;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.shoppingmall.admin.model.Admin;
+import com.shoppingmall.admin.model.AdminDAO;
+import com.shoppingmall.product.model.BrandDAO;
+import com.shoppingmall.product.model.EventInfoDAO;
+import com.shoppingmall.product.model.EventProduct;
+import com.shoppingmall.product.model.EventProductDAO;
+import com.shoppingmall.product.model.NationDAO;
+import com.shoppingmall.product.model.PanelSizeDAO;
+import com.shoppingmall.product.model.Product;
+import com.shoppingmall.product.model.ProductDAO;
+import com.shoppingmall.product.model.ProductSize;
+import com.shoppingmall.product.model.ProductSizeDAO;
+import com.shoppingmall.product.model.SubCategoryDAO;
+import com.shoppingmall.product.model.TopCategoryDAO;
+
+import common.exception.DoNotLoginException;
+import common.file.FileManager;
+
+@Service
+public class AdminServiceImpl implements AdminService{
+	private String TAG = this.getClass().getName();
+	
+	@Autowired
+	@Qualifier("adminDAOImpl")
+	private AdminDAO adminDAO;
+	
+	@Autowired
+	@Qualifier("brandDAOImpl")
+	private BrandDAO brandDAO;
+	
+	@Autowired
+	@Qualifier("nationDAOImpl")
+	private NationDAO nationDAO;
+	
+	@Autowired
+	@Qualifier("panelSizeDAOImpl")
+	private PanelSizeDAO panelSizeDAO;
+	
+	@Autowired
+	@Qualifier("subCategoryDAOImpl")
+	private SubCategoryDAO subCategoryDAO;
+	
+	@Autowired
+	@Qualifier("topCategoryDAOImpl")
+	private TopCategoryDAO topCategoryDAO;
+	
+	@Autowired
+	@Qualifier("productDAOImpl")
+	private ProductDAO productDAO;
+	
+	@Autowired
+	@Qualifier("productSizeDAOImpl")
+	private ProductSizeDAO productSizeDAO;
+	
+	@Autowired
+	@Qualifier("eventInfoDAOImpl")
+	private EventInfoDAO eventInfoDAO;
+	
+	@Autowired
+	@Qualifier("eventProductDAOImpl")
+	private EventProductDAO eventProductDAO;
+	
+	@Override
+	public void login(Admin admin, HttpSession session) throws DoNotLoginException{
+		
+		Admin result = adminDAO.select(admin);
+		if(result == null){
+			throw new DoNotLoginException("아이디,패스워드를 확인해주세요.");
+		}
+		session.setAttribute("admin", result);
+	}
+	
+	/* 로그아웃 */
+	@Override
+	public void logout(HttpSession session) {
+		
+		session.removeAttribute("admin");
+		
+	}
+	
+	public Map registProduct(){
+		
+		Map allList = new HashMap();
+		
+		List brandList = brandDAO.selectAll();
+		allList.put("brandList", brandList);
+		
+		List nationList = nationDAO.selectAll();
+		allList.put("nationList", nationList);
+		
+		List panelSizeList = panelSizeDAO.selectAll();
+		allList.put("panelSizeList", panelSizeList);
+		
+		List topCategoryList = topCategoryDAO.selectAll();
+		allList.put("topCategoryList", topCategoryList);
+		
+		return allList;
+	}
+
+
+	/* 서브카테고리 얻어오기!! */
+	public List getSubCategory(int topCategory_id) {
+		
+		List subCategoryList = subCategoryDAO.selectAll(topCategory_id);
+
+		return subCategoryList;
+	}
+	
+	
+	/* 상품 등록하기 */
+	@Override
+	public void insert(Product product, String[] panelsize_id, HttpServletRequest request) {
+		
+		
+		File temp = null;
+		// 파일업로드
+		MultipartFile myFile = product.getMyFile();	// 넘겨받은 파일 객체 추출.
+		
+		String realname = myFile.getOriginalFilename(); // 넘겨받은 파일의 파일이름 추출.
+		String savePath = request.getServletContext().getRealPath("/data/");
+		
+		String ext = FileManager.getExtend(realname);
+		
+		// DB 넣기.
+		product.setFilename(realname);
+		int product_id = productDAO.insert(product);
+		
+		
+		for(int i = 0; i < panelsize_id.length; i++){
+			ProductSize productSize = new ProductSize();
+			productSize.setProduct_id(product_id);
+			productSize.setPanelsize_id(Integer.parseInt(panelsize_id[i]));
+			
+			productSizeDAO.insert(productSize);
+		}
+		
+		
+		
+		String fullname = savePath+product_id+"."+ext;
+		
+		try {
+			// 넘겨받은 파일 서버에 저장.
+			myFile.transferTo(temp = new File(fullname));
+			// 썸네일
+			FileManager.makeThumb(temp, savePath, realname, product_id);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	// 전체 상품
+	@Override
+	public List selectAll() {
+		
+		List list = productDAO.selectAll();
+		
+		return list;
+	}
+	
+	// 이벤트 정보 가져오기
+	@Override
+	public List eventAll() {
+		
+		List list = eventInfoDAO.selectAll();
+		
+		return list;
+	}
+	
+	/* 상품삭제 */
+	@Override
+	public void productDelete(String[] product_id, String[] filename, HttpServletRequest request) {
+		String path = request.getServletContext().getRealPath("/data/");
+		for(int i = 0; i < product_id.length; i++){
+			// 상품삭제
+			productDAO.delete(Integer.parseInt(product_id[i]));
+			// 해당상품 사이즈 삭제
+			productSizeDAO.delete(Integer.parseInt(product_id[i]));
+			
+			// 사진삭제
+			File file = new File(path+product_id[i]+"."+FileManager.getExtend(filename[i]));
+			File thumbFile = new File(path+product_id[i]+"_thumb."+FileManager.getExtend(filename[i]));
+			file.delete();
+			thumbFile.delete();
+		}
+		
+	}
+	
+	/* 이벤트등록 */
+	@Override
+	public void eventRegist(String[] product_id, String eventinfo_id) {
+		
+		for(int i = 0; i < product_id.length; i++){
+			
+			eventProductDAO.insert(Integer.parseInt(product_id[i]), Integer.parseInt(eventinfo_id));
+		}
+	}
+	
+	/* 이벤트정렬 */
+	@Override
+	public List eventSelect(int eventinfo_id) {
+		
+		List<EventProduct> eventList = eventProductDAO.select(eventinfo_id);
+		
+		ArrayList<Product> productList = new ArrayList<Product>();
+		for(int i = 0; i < eventList.size(); i++){
+			EventProduct eventProduct = eventList.get(i);
+			
+			Product product = productDAO.select(eventProduct.getProduct_id());
+			
+			productList.add(product);
+		}
+		
+		return productList;
+	}
+
+	@Override
+	public void eventDelete(String[] product_id, int eventinfo_id) {
+		
+		for(int i = 0; i < product_id.length; i++){
+			eventProductDAO.delete(Integer.parseInt(product_id[i]), eventinfo_id);
+		}
+		
+	}
+	
+	// 이벤트 중복검사
+	@Override
+	public List duplicateEvent(String[] product_id, int eventinfo_id) {
+		
+		ArrayList<EventProduct> eventList = new ArrayList<EventProduct>();
+		for(int i = 0; i < product_id.length; i++){
+			EventProduct event = eventProductDAO.dupleSelect(Integer.parseInt(product_id[i]), eventinfo_id);
+			eventList.add(event);
+		}
+		
+		ArrayList<Product> productList = new ArrayList<Product>();
+		
+		
+		for(int i = 0; i < eventList.size(); i++){
+			EventProduct eventProduct = eventList.get(i);
+			
+			if(eventProduct == null){
+				return productList;
+			}
+			
+			Product product = productDAO.select(eventProduct.getProduct_id());
+			
+			productList.add(product);
+		}
+		
+		return productList;
+	}
+	
+	
+	
+	
+
+}

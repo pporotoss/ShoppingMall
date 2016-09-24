@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Admin">
+  
+  <select id="selectOne" resultType="Admin" parameterType="Admin">
+  	select admin_id, id, pwd from admin
+  	where id=#{id} and pwd=#{pwd}
+  </select>
+  
+  <select id="brandList" resultType="Brand">
+		select brand_id, name from brand order by brand_id asc
+	</select>
+	
+	<select id="nationList" resultType="Nation">
+		select nation_id, name from nation order by nation_id asc
+	</select>
+	
+	<select id="panelSizeList" resultType="PanelSize">
+		select panelsize_id, name from panelsize order by panelsize_id asc
+	</select>
+	
+	<select id="subCategoryList" resultType="SubCategory" parameterType="int">
+		select subcategory_id, name, topcategory_id from subcategory where topcategory_id=#{topCategory_id} 
+		order by subcategory_id
+	</select>
+	
+	<select id="topCategoryList" resultType="TopCategory">
+		select topcategory_id, name from topcategory order by topcategory_id		
+	</select>
+</mapper>

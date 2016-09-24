@@ -1,0 +1,89 @@
+package com.shoppingmall.product.model;
+
+public class Product {
+	private int product_id;
+	private int subcategory_id;
+	private String product_name;
+	private int brand_id;
+	private int nation_id;
+	private int price;
+	private int discount;
+	private int point;
+	private int stock;
+	private String filename;
+	private String detail;
+	private String regdate;
+	public int getProduct_id() {
+		return product_id;
+	}
+	public int getSubcategory_id() {
+		return subcategory_id;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public int getBrand_id() {
+		return brand_id;
+	}
+	public int getNation_id() {
+		return nation_id;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public int getDiscount() {
+		return discount;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public int getStock() {
+		return stock;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public String getDetail() {
+		return detail;
+	}
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setProduct_id(int product_id) {
+		this.product_id = product_id;
+	}
+	public void setSubcategory_id(int subcategory_id) {
+		this.subcategory_id = subcategory_id;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public void setBrand_id(int brand_id) {
+		this.brand_id = brand_id;
+	}
+	public void setNation_id(int nation_id) {
+		this.nation_id = nation_id;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
+	
+}

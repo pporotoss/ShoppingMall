@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.shoppingmall.admin.model.Admin" alias="Admin" />
+		<typeAlias type="com.shoppingmall.product.model.Brand" alias="Brand" />
+		<typeAlias type="com.shoppingmall.product.model.Nation" alias="Nation" />
+		<typeAlias type="com.shoppingmall.product.model.PanelSize" alias="PanelSize" />
+		<typeAlias type="com.shoppingmall.product.model.Product" alias="Product" />
+		<typeAlias type="com.shoppingmall.product.model.SubCategory" alias="SubCategory" />
+		<typeAlias type="com.shoppingmall.product.model.TopCategory" alias="TopCategory" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="mybatis/AdminMapper.xml" />
+		<mapper resource="mybatis/ProductMapper.xml"/>
+	</mappers>
+</configuration>

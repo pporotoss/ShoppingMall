@@ -1,0 +1,11 @@
+<%@page import="com.shoppingmall.admin.model.Admin"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	Admin admin = (Admin)session.getAttribute("admin");
+	if(admin == null){
+		out.print("<script>");
+		out.print("alert('잘못된 접근 입니다!!!');");
+		out.print("history.back();");
+		out.print("</script>");
+	}
+%>

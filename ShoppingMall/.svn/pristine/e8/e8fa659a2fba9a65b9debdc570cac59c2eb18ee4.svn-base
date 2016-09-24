@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+label {
+	width: 100px;
+}
+</style>
+</head>
+<body>
+
+	<header>
+		<div class="jumbotron" style="padding: 0.5em 5em;">
+			<div class="container text-center">
+				<h4>관리자 모드 검색모드 추가</h4>
+
+			</div>
+		</div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">홈 ></a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">홈</a></li>
+						<li><a href="#">상품관리</a></li>
+						<li><a href="#">주문/매출관리</a></li>
+						<li><a href="#">회원관리</a></li>
+						<li><a href="#">통계/분석</a></li>
+						<li><a href="#">업체관리</a></li>
+						<li><a href="#">게시판관리</a></li>
+						<li><a href="#">잡동사니</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"><span
+								class="glyphicon glyphicon-search">검색</span></a>
+							<ul class="dropdown-menu">
+								<input type="text" placeholder="Search Blog..">
+
+							</ul></li>
+					</ul>
+				</div>
+		</nav>
+	</header>
+
+
+	<div class="container">
+		<div class="col-md-2 sidebar" style="border: 1px solid silver;">
+			<div class="side">
+				<br>
+				<div align="center" style="border: 1px solid silver;">
+					<strong><span>상품관리</span></strong>
+				</div>
+				<br>
+				<ul>
+					<li><a href="#"><span>상품등록</span></a></li>
+					<li><a href="#"><span>상품재고관리</span></a>
+					<li><a href="#"><span>상품진열설정</span></a></li>
+					<li><a href="#"><span>최근본상품</span></a></li>
+					<li><a href="#"><span>찜한상품담기</span></a></li>
+				</ul>
+				<br>
+				<div align="center" style="border: 1px solid silver;">
+					<strong><span>주문/매출관리</span></strong>
+				</div>
+				<br>
+				<ul>
+					<li><a href="#"><span>전체 주문</span></a></li>
+					<li><a href="#"><span>신규주문</span></a></li>
+					<li><a href="#"><span>입금확인</span></a></li>
+					<li><a href="#"><span>입금완료</span></a></li>
+					<li><a href="#"><span>배송준비중</span></a></li>
+					<li><a href="#"><span>배송중</span></a></li>
+					<li><a href="#"><span>배송완료</span></a></li>
+					<li><a href="#"><span>주문취소</span></a></li>
+					<li><a href="#"><span>교환요청</span></a></li>
+					<li><a href="#"><span>취소요청</span></a></li>
+					<li><a href="#"><span>반품요청</span></a></li>
+				</ul>
+				<br>
+				<div align="center" style="border: 1px solid silver;">
+					<strong><span>회원관리</span></strong>
+				</div>
+				<br>
+				<ul>
+					<li><a href="#"><span>회원목록</span></a></li>
+				</ul>
+				<br>
+				<div align="center" style="border: 1px solid silver;">
+					<strong><span>통계/분석</span></strong>
+				</div>
+				<br>
+				<ul>
+					<li><a href="#"><span>회원정보변경</span></a></li>
+					<li><a href="#"><span>회원정보탈퇴</span></a></li>
+				</ul>
+				<br>
+				<div align="center" style="border: 1px solid silver;">
+					<strong><span>엡체관리</span></strong>
+				</div>
+				<br>
+				<ul>
+					<li><a href="#"><span>회원정보변경</span></a></li>
+					<li><a href="#"><span>회원정보탈퇴</span></a></li>
+				</ul>
+				<br>
+				<div align="center" style="border: 1px solid silver;">
+					<strong><span>게시판관리</span></strong>
+				</div>
+				<br>
+				<ul>
+					<li><a href="#"><span>1:1게시판</span></a></li>
+					<li><a href="#"><span>후기게시판</span></a></li>
+					<li><a href="#"><span>공지사항</span></a></li>
+				</ul>
+			</div>
+
+
+		</div>
+		<!-- 사이드메뉴 끝 -->
+		<div id="side" class="col-md-9" style="border: 1px solid silver;" align="left">
+
+			<h3>상품등록</h3>
+			<br>
+			<div>
+				<label>TopCategory</label> <select>
+					<option>선택하세요</option>
+				</select>
+			</div>
+
+			<div>
+				<label>SubCategory </label><select>
+					<option>선택하세요</option>
+				</select>
+			</div>
+
+			<div>
+				<label for="name">상품명</label> <input type="text" size="10" id="name">
+			</div>
+			<div>
+				<label for="price">가격</label> <input type="text" size="10"
+					id="price">
+			</div>
+			<div>
+				<label for="discount">할인가격</label> <input type="text" size="10"
+					id="discount">
+			</div>
+			<div>
+				<label for="point">포인트</label> <input type="text" size="10"
+					id="point">
+			</div>
+			<div>
+				<label for="stock">재고</label> <input type="text" size="10"
+					id="stock">
+			</div>
+			<div>
+				<label for="title">상품제목</label> <input type="text" size="10"
+					id="title">
+			</div>
+			<div>
+				<label for="memo">간단설명</label> <input type="text" size="10"
+					id="memo">
+			</div>
+
+			<div>
+				<label for="filename">상품사진</label> <input type="file" size="10"
+					id="filename">
+			</div>
+			<div>
+				<label for="detail">내용 여기 해결하기</label>
+				<textarea class="container" rows="20"  id="detail"></textarea>
+			</div>
+				<div>
+					<button>등록하기</button>
+					<button>취소하기</button>
+					
+				</div>
+
+
+			<br>
+			<div style="border: 1px solid silver;" align="center">
+				<h4>최근주문정보</h4>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>주문일자</th>
+							<th>상품명</th>
+							<th>결제금액</th>
+							<th>주문상세</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="4">주문내역이 없습니다</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- 나에정보 끝 -->
+
+
+
+	</div>
+	</div>

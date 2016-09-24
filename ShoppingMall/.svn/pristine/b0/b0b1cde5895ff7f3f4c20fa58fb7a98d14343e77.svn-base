@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	
+	<!-- 자동으로 @Controller만 메모리에 올린다. -->
+	<context:component-scan base-package="com.shoppingmall.*">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- viewResolver 정의!! -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/"
+		p:suffix=".jsp"/>
+	
+	<!-- 파일 업로드 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+	<!-- TranSaction 등록!!! -->
+	<tx:advice id="txtAdvice" transaction-manager="dataSourceTransactionManager">
+		<tx:attributes>
+			<!-- 트랜잭션을 적용할 메서드를 등록 -->
+			<tx:method name="insert" propagation="REQUIRED"/>
+			<!-- name:적용할 메서드 이름. propagation : 트랜잭션을 무조건 처리할 것인지 여부. -->
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- AOP 설정!! -->
+	<aop:config>
+		<!-- 접근지정자:public / 반환형:모든것 / 패키지:패키지에 있는 Service가 들어가는 모든 클래스의 모든 매서드에 적용. / 매개변수 : 모든것  -->
+		<aop:pointcut expression="execution(public * com.shoppingmall.*.service.*Service*.*(..))" id="serviceCut"/>
+		
+		<!-- aop적용될 코드를 입력. -->
+		<aop:advisor advice-ref="txtAdvice" pointcut-ref="serviceCut"/>
+	</aop:config>
+</beans>

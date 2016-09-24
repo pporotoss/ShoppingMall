@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.shoppingmall.admin.model.Admin" alias="Admin" />
+		<typeAlias type="com.shoppingmall.product.model.Brand" alias="Brand" />
+		<typeAlias type="com.shoppingmall.product.model.Nation" alias="Nation" />
+		<typeAlias type="com.shoppingmall.product.model.PanelSize" alias="PanelSize" />
+		<typeAlias type="com.shoppingmall.product.model.Product" alias="Product" />
+		<typeAlias type="com.shoppingmall.product.model.SubCategory" alias="SubCategory" />
+		<typeAlias type="com.shoppingmall.product.model.TopCategory" alias="TopCategory" />
+		<typeAlias type="com.shoppingmall.product.model.ProductBrand" alias="ProductBrand" />
+		<typeAlias type="com.shoppingmall.product.model.ProductNation" alias="ProductNation" />
+		<typeAlias type="com.shoppingmall.product.model.ProductSize" alias="ProductSize" />
+		<typeAlias type="com.shoppingmall.product.model.ProductSub" alias="ProductSub" />
+		
+	</typeAliases>
+	<mappers>
+		<mapper resource="mybatis/AdminMapper.xml" />
+		<mapper resource="mybatis/BrandMapper.xml" />
+		<mapper resource="mybatis/NationMapper.xml" />
+		<mapper resource="mybatis/PanelSizeMapper.xml" />
+		<mapper resource="mybatis/ProductMapper.xml"/>
+		<mapper resource="mybatis/SubCategoryMapper.xml" />
+		<mapper resource="mybatis/TopCategoryMapper.xml" />
+		<mapper resource="mybatis/ProductBrandMapper.xml" />
+		<mapper resource="mybatis/ProductNationMapper.xml" />
+		<mapper resource="mybatis/ProductSizeMapper.xml" />
+		<mapper resource="mybatis/ProductSubMapper.xml" />
+		
+	</mappers>
+</configuration>

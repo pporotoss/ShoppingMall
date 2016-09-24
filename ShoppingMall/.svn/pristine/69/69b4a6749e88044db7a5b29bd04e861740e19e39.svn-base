@@ -1,0 +1,8 @@
+package com.shoppingmall.product.model;
+
+public interface EventProductDAO {
+	
+	public void insert(int product_id, int eventinfo_id);
+	
+	public void delete(int product_id);
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Brand">
+  
+  <select id="brandList" resultType="Brand">
+		select brand_id, name from brand order by brand_id asc
+	</select>
+
+</mapper>

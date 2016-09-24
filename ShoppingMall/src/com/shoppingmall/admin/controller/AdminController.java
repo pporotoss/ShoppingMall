@@ -1,0 +1,324 @@
+package com.shoppingmall.admin.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.shoppingmall.admin.model.Admin;
+import com.shoppingmall.admin.model.Notice;
+import com.shoppingmall.admin.service.AdminService;
+import com.shoppingmall.product.model.Product;
+import com.shoppingmall.product.model.TopCategory;
+
+import common.exception.DoNotLoginException;
+import common.page.PagingBean;
+
+/* 관리자 페이지 관련 컨트롤러 */
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+	String TAG = this.getClass().getName();
+	
+	@Autowired
+	@Qualifier("adminServiceImpl")
+	private AdminService adminService;
+	
+	/* 관리자 로그인 */
+	@RequestMapping("/login.do")
+	public String login(Admin admin, HttpSession session){
+		
+		adminService.login(admin, session);
+		
+		return "redirect:/admin/regist.do";
+	}
+	
+	/* 관리자 로그아웃 */
+	@RequestMapping("/logout.do")
+	public String logout(HttpSession session){
+		
+		adminService.logout(session);
+		
+		return "redirect:/admin/index.jsp";
+	}
+	
+	
+	/* 상품등록페이지 */
+	@RequestMapping("/regist.do")
+	public ModelAndView regist(){
+		
+		Map allList = adminService.registProduct();
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("allList", allList);
+		
+		mav.setViewName("admin/regist");
+		
+		return mav;
+	}
+	
+	/* 상품 등록하기 */
+	@RequestMapping("/insert.do")
+	public String insert(Product product, String[] panelsize_id, HttpServletRequest request){
+		
+		adminService.insert(product, panelsize_id, request);
+		
+		return "redirect:/admin/list.do";
+	}
+	
+	/* 상품 리스트 */
+	@RequestMapping("/list.do")
+	public ModelAndView selectAll(HttpServletRequest request){
+		PagingBean pb = new PagingBean();
+		
+		ModelAndView mav = new ModelAndView();
+		
+		List list = adminService.selectAll();
+		mav.addObject("list", list);
+		mav.setViewName("admin/list");
+		
+		String currentPage = (String) request.getParameter("currentPage");
+		
+		if(currentPage == null){
+			currentPage = "1";
+		}
+		
+		pb.init(Integer.parseInt(currentPage), list.size(), 10, 10);
+		mav.addObject("pb", pb);
+		
+		return mav;
+	}
+	
+	/* 이벤트 리스트 */
+	@RequestMapping("/event.do")
+	public ModelAndView event(HttpServletRequest request){
+		PagingBean pb = new PagingBean();
+		
+		ModelAndView mav = new ModelAndView();
+		// 상품 전체 가져오기
+		List list = adminService.selectAll();
+		mav.addObject("list", list);
+		
+		// 이벤트정보 가져오기
+		List eventList = adminService.eventAll();
+		mav.addObject("eventList", eventList);
+		
+		String currentPage = (String) request.getAttribute("currentPage");
+		if(currentPage == null){
+			currentPage = "1";
+		}
+		
+		pb.init(Integer.parseInt(currentPage), list.size(), 10, 10);
+		mav.addObject("pb", pb);
+		
+		mav.setViewName("admin/event");
+		
+		return mav;
+	}
+	
+	/* 이벤트 정렬 */
+	@RequestMapping("/eventSelect.do")
+	public ModelAndView eventSelect(int eventinfo_id, HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		PagingBean pb = new PagingBean();
+		List list = null;
+		
+		if(eventinfo_id == -1){ // 전체 조회 선택
+			
+			// 상품 전체 가져오기
+			list = adminService.selectAll();
+			mav.addObject("list", list);
+			
+		}else{
+			list = adminService.eventSelect(eventinfo_id);
+			mav.addObject("list", list);
+			mav.addObject("event_id", eventinfo_id);
+		}
+		
+		// 이벤트정보 가져오기
+		List eventList = adminService.eventAll();
+		mav.addObject("eventList", eventList);
+		
+		String currentPage = (String) request.getAttribute("currentPage");
+		if(currentPage == null){
+			currentPage = "1";
+		}
+		
+		pb.init(Integer.parseInt(currentPage), list.size(), 10, 10);
+		mav.addObject("pb", pb);
+		
+		mav.setViewName("admin/event");
+		
+		return mav;
+	}
+	
+	/* 상품 삭제 */
+	@RequestMapping("/delete.do")
+	public String productDelete(String[] product_id, String[] filename,HttpServletRequest request){
+		
+		adminService.productDelete(product_id, filename, request);
+		
+		return "redirect:/admin/list.do";
+	}
+	
+	/* 이벤트 중복등록 여부 */
+	@RequestMapping("/duplicateEvent")
+	public ModelAndView duplicateEvent(HttpServletRequest request, int eventinfo_id){
+		ModelAndView mav = new ModelAndView();
+		
+		String[] product_id = request.getParameterValues("product_id[]");
+		List list = adminService.duplicateEvent(product_id, eventinfo_id);
+		mav.addObject("list", list);
+		
+		mav.setViewName("admin/duple");
+		
+		return mav;
+	}
+	
+	
+	/* 이벤트 등록 */
+	@RequestMapping("/eventRegist.do")
+	public String eventRegist(String[] product_id, String eventinfo_id){
+		
+		adminService.eventRegist(product_id, eventinfo_id);
+		
+		return "redirect:/admin/event.do";
+	}
+	
+	/* 이벤트 삭제 */
+	@RequestMapping("/eventDelete.do")
+	public String eventDelete(String[] product_id, int event_id){
+		
+		adminService.eventDelete(product_id, event_id);
+		
+		
+		return "redirect:/admin/event.do";
+	}
+	
+	/* 서브카테고리 얻기 */
+	@RequestMapping("/sub.do")
+	public ModelAndView subCategory(TopCategory topCategory) {
+		ModelAndView mav = new ModelAndView();
+		
+		List list = adminService.getSubCategory(topCategory.getTopcategory_id());
+		mav.addObject("sub", list);
+		
+		mav.setViewName("admin/sub");
+		return mav;
+	}
+	
+	/* 회원전체 불러오기 */
+	@RequestMapping("/member.do")
+	public ModelAndView allMember(){
+		ModelAndView mav = new ModelAndView();
+		
+		List list = adminService.allMember();
+		mav.addObject("memList", list);
+		
+		mav.setViewName("admin/member");
+		
+		return mav;
+	}
+	
+	/* 공지사항 전체 불러오기 */
+	@RequestMapping("/notice.do")
+	public ModelAndView notice(HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		PagingBean pb = new PagingBean();
+		
+		List list = adminService.noticeAll();
+		
+		mav.addObject("list", list);
+		
+		String currentPage = (String) request.getAttribute("currentPage");
+		if(currentPage == null){
+			currentPage = "1";
+		}
+		
+		pb.init(Integer.parseInt(currentPage), list.size(), 10, 10);
+		mav.addObject("pb", pb);
+		
+		mav.setViewName("admin/notice");
+		
+		return mav;
+	}
+	
+	/* 공지사항 삽입하기 */
+	@RequestMapping("/writenotice.do")
+	public String writeNotice(Notice notice){
+		
+		adminService.noticeWrite(notice);
+		
+		return "redirect:/admin/notice.do";
+	}
+	
+	/* 공지사항 상세보기 */
+	@RequestMapping("/notice_detail.do")
+	public ModelAndView detailNotice(int notice_id){
+		ModelAndView mav = new ModelAndView();
+		
+		Notice notice = adminService.noticeOne(notice_id);
+		
+		mav.addObject("notice", notice);
+		
+		mav.setViewName("admin/notice_detail");
+		
+		return mav;
+	}
+	
+	/* 공지사항 삭제하기 */
+	@RequestMapping("/noticeDelete.do")
+	public String deleteNotice(int notice_id){
+		
+		adminService.noticeDelete(notice_id);
+		
+		return "redirect:/admin/notice.do";
+	}
+	
+	/* 수정페이지로 이동 */
+	@RequestMapping("/goedit.do")
+	public ModelAndView goEdit(int notice_id){
+		ModelAndView mav = new ModelAndView();
+		
+		Notice notice = adminService.noticeOne(notice_id);
+		
+		mav.addObject("notice", notice);
+		mav.setViewName("admin/notice_edit");
+		
+		return mav;
+	}
+	
+	
+	/* 공지사항 수정하기 */
+	@RequestMapping("/editnotice.do")
+	public String editNotice(Notice notice){
+		
+		adminService.noticeUpdate(notice);
+		
+		return "redirect:/admin/notice.do";
+	}
+	
+	
+	/* 로그인 불가 예외 */
+	@ExceptionHandler(DoNotLoginException.class)
+	public ModelAndView doNotLogin(DoNotLoginException e){
+		
+		String msg = e.getMessage();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+		
+		mav.setViewName("admin/index");
+		
+		return mav;
+	}
+	
+}

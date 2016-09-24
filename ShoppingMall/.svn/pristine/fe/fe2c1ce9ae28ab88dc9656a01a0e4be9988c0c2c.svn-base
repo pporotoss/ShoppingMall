@@ -1,0 +1,123 @@
+<%@page import="common.file.FileManager"%>
+<%@page import="com.shoppingmall.product.model.Product"%>
+<%@page import="com.shoppingmall.product.model.PanelSize"%>
+<%@page import="com.shoppingmall.product.model.Nation"%>
+<%@page import="com.shoppingmall.product.model.Brand"%>
+<%@page import="com.shoppingmall.product.model.TopCategory"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	List<Product> list = (List)request.getAttribute("list");	
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자 페이지</title>
+<!-- CKEditor -->
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script src="../jslib/common.js"></script>
+<script>
+	
+</script>
+</head>
+
+<body>
+	<!-- 상단 메뉴 -->
+	<%@ include file="/include/adminTopNav.jsp"%>
+	<!-- 좌측메뉴 -->
+	<%@ include file="/include/adminSideNav.jsp" %>
+
+	<!-- 본문영역 -->
+	<div class="container">
+		<h2>상품 목록</h2>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>이미지</th>
+						<th>상품명</th>
+						<th>브랜드</th>
+						<th>제조국가</th>
+						<th>화면크기</th>
+						<th>가격</th>
+						<th>할인가</th>
+						<th>포인트</th>
+						<th>재고량</th>
+						<th>상품등록일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%for(int i = 0; i < list.size(); i++){ %>
+					<%Product product = list.get(i); %>
+					<tr>
+						<td><%=product.getProduct_id()%></td>
+						<td><img src="/data/<%=product.getProduct_id()%>_thumb.<%=FileManager.getExtend(product.getFilename())%>"></td>
+						<td><%=product.getProduct_name() %></td>
+						<td><%=product.getBrand_name() %></td>
+						<td><%=product.getNation_name() %></td>
+						<td><a href="#myModal" data-toggle="modal">화면크기</a></td>
+						<div id="myModal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+							<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">화면크기</h4>
+									</div>
+									<div class="modal-body">
+										<p>
+											<%List<PanelSize> pList = product.getPanelSize(); %>
+											<%for(int j = 0; j < pList.size(); j++){ %>
+												<%PanelSize psize = pList.get(j); %>
+												<%if(j < pList.size()-1){ %>
+													<%=psize.getName()+", "%>
+												<%}else{ %>
+													<%=psize.getName()%>
+												<%} %>
+												
+											<%} %>							
+										</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							
+							</div>
+						</div>
+						<td><%=product.getPrice() %></td>
+						<td><%=product.getDiscount() %></td>
+						<td><%=product.getPoint() %></td>
+						<td><%=product.getStock() %></td>
+						<td><%=product.getRegdate() %></td>
+					</tr>
+					<%} %>
+				</tbody>
+			</table>
+		</div>
+		<!-- 페이징 -->
+		<ul class="pagination">
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            <!-- if currentPage 하고 같으면 active하기. -->
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#">9</a></li>
+            <li><a href="#">10</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+          </ul>
+	</div>
+
+	<!-- 부트스트랩 관련 불러오기!! -->
+	<%@ include file="/include/loadBootStrap.jsp"%>
+</body>
+</html>

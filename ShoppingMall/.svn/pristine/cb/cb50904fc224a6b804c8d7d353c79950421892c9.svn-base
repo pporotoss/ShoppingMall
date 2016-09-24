@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductSize">
+  
+	 <insert id="insert" parameterType="ProductSize">
+ 		insert into productsize(productsize_id, product_id, panelsize_id) values
+	   	(seq_productsize.nextval, #{product_id}, #{panelsize_id})
+	 </insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from productsize where product_id=#{product_id}
+	</delete>
+</mapper>

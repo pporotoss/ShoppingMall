@@ -1,0 +1,58 @@
+
+<html lang="en">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+label {
+	width: 130px;
+}
+</style>
+</head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container" align="center">
+		<h3>관리자 로그인</h3>
+		<p>Make the viewport larger than 768px wide to see that all of the
+			form elements are inline, left aligned, and the labels are alongside.</p>
+		<form class="form-inline" role="form">
+			<div class="form-group">
+				<label for="id">아이디:</label> <input type="email"
+					class="form-control" id="id" placeholder="Enter id">
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="pwd">비밀번호:</label> <input type="password"
+					class="form-control" id="pwd" placeholder="Enter password">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

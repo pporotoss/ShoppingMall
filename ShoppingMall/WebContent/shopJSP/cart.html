@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+label {
+	width: 130px;
+}
+</style>
+</head>
+<body>
+
+	<header>
+		<div align="right" class="jumbotron" style="padding: 0.5em 0.6em;">
+			<ul class="list-inline">
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+						로그인</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+						회원가입</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+						마이페이지</a></li>
+				<li><a href="#"><span
+						class="glyphicon glyphicon-shopping-cart"></span> 장바구니</a></li>
+			</ul>
+		</div>
+		<div class="jumbotron" style="padding: 0.5em 5em;">
+			<div class="container text-center">
+				<h4>Online Store</h4>
+				<p>Mission, Vission & Values</p>
+			</div>
+		</div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">온라인스토어 ></a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">홈</a></li>
+						<li><a href="#">선물</a></li>
+						<li><a href="#">콘</a></li>
+						<li><a href="#">젤</a></li>
+						<li><a href="#">이벤트</a></li>
+						<li><a href="#">고객센터</a></li>
+
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"><span
+								class="glyphicon glyphicon-search">검색</span></a>
+							<ul class="dropdown-menu">
+								<input type="text" placeholder="Search Blog..">
+
+							</ul></li>
+					</ul>
+				</div>
+		</nav>
+	</header>
+	<!-- 해더끝 -->
+	장바구니 담긴 상품 번호 사진 제품명 수량 적립 가격 배송비 취소 총 구매금액 : 11,400원 + 배송료 1,500원 =
+	12,900원 (받으실 예상 적립금 3,420원) 1 상품 섬네일 한국라텍스 필링핏(8개) feelingfit 한국콘돔의
+	자존심!! 선택사항변경/추가 3 수정 3,420 11,400원 [기본배송] 조건 관심상품 삭제 옵션 수량선택 : 8개 할인구매
+	3개
+
+	<div class="container">
+		<h3>MyPage</h3>
+		<div style="border: 1px solid silver;" align="center">
+			<h4>장바구니</h4>
+			<div align="left">
+				<strong>장바구니 담긴 상품</strong>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>사진</th>
+						<th>제품명</th>
+						<th>수량</th>
+						<th>적립</th>
+						<th>가격</th>
+						<th>배송비</th>
+						<th>취소</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>1</th>
+						<th>image</th>
+						<th>name</th>
+						<th><div><input type="text" size="1">stock</div></th>
+						<th>point</th>
+						<th>price</th>
+						<th>배송비</th>
+						<th><button type="submit" class="btn btn-default">삭제</button></th>
+					</tr>
+					<tr >
+						<th colspan="8" ><div align="right">총 구매금액 : 11,400원 + 배송료 1,500원 = 12,900원 (받으실 예상 적립금 3,420원)</div></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<div align="center">
+			2만원미만 구매시 배송료 1,500원을 청구합니다.(제주도 동일)
+		</div>
+		<br>
+		<div align="center">
+			<button type="submit" class="btn btn-default">계속쇼핑하기</button>
+			<button type="submit" class="btn btn-default">장바구니 비우기</button>
+			<button type="submit" class="btn btn-default">모두 주문하기</button>
+		</div>
+	</div>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<style>
+</style>
+</head>
+<body>
+
+	<header>
+		<div align="right" class="jumbotron" style="padding: 0.5em 0.6em;">
+			<ul class="list-inline">
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+						로그인</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+						회원가입</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+						마이페이지</a></li>
+				<li><a href="#"><span
+						class="glyphicon glyphicon-shopping-cart"></span> 장바구니</a></li>
+			</ul>
+		</div>
+		<div class="jumbotron" style="padding: 0.5em 5em;">
+			<div class="container text-center">
+				<h4>Online Store</h4>
+				<p>Mission, Vission & Values</p>
+			</div>
+		</div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">온라인스토어 ></a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">홈</a></li>
+						<li><a href="#">선물</a></li>
+						<li><a href="#">콘</a></li>
+						<li><a href="#">젤</a></li>
+						<li><a href="#">이벤트</a></li>
+						<li><a href="#">고객센터</a></li>
+
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"><span
+								class="glyphicon glyphicon-search">검색</span></a>
+							<ul class="dropdown-menu">
+								<input type="text" placeholder="Search Blog..">
+
+							</ul></li>
+					</ul>
+				</div>
+		</nav>
+	</header>
+	<!-- 해더끝 -->
+	<div class="container">
+		<div class="col-md-2">
+			<div align="center" style="border: 1px solid silver;">
+				<strong><span>브랜드</span></strong>
+			</div>
+			<ul>
+				<li><a href="#"><span>오자키</span></a></li>
+			</ul>
+		</div>
+		<div class="col-md-9">
+			<h3 align="center">Product</h3>
+			<br>
+			<div align="right">
+				<a>인기상품순</a>&nbsp;&nbsp;<a>신상품순</a>&nbsp;&nbsp;<a>가격순</a>
+			</div>
+			<div style="border: 1px solid silver;"></div><br>
+			<div class="row">
+				<a href="/shop/detail.html">
+					<div class="col-sm-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">제품명</div>
+							<div class="panel-body">
+								<img src="http://placehold.it/150x80?text=사진"
+									class="img-responsive" style="width: 100%" alt="Image">
+							</div>
+							<div class="panel-footer">제품간단설명</div>
+							<div class="panel-footer">뎃글갯수</div>
+							<div class="panel-footer">11,900원 → 9,800원</div>
+							<div class="panel-footer">적립금 : 2,940원</div>
+							<div class="panel-footer" align="center">
+								<button type="submit" class="btn btn-default">장바구니담기</button>
+								<button type="submit" class="btn btn-default">구매</button>
+							</div>
+						</div>
+					</div>
+				</a>
+				<div class="col-sm-4">
+					<div class="panel panel-danger">
+						<div class="panel-heading">BLACK FRIDAY DEAL</div>
+						<div class="panel-body">
+							<img src="http://placehold.it/150x80?text=IMAGE"
+								class="img-responsive" style="width: 100%" alt="Image">
+						</div>
+						<div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="panel panel-success">
+						<div class="panel-heading">BLACK FRIDAY DEAL</div>
+						<div class="panel-body">
+							<img src="http://placehold.it/150x80?text=IMAGE"
+								class="img-responsive" style="width: 100%" alt="Image">
+						</div>
+						<div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+
+
+
+	</div>
+	</div>
