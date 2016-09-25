@@ -1,6 +1,6 @@
 # ShoppingMall
 
-※ JAVA, SPRING, MyBatis, AJAX, JAVASCRIPT, BOOTSTRAP, ORACLE
+※ JAVA, SPRING, JSP, MyBatis, AJAX, JAVASCRIPT, BOOTSTRAP, ORACLE
 
 ※ 쇼핑몰 관리자 페이지, 회원가입 및 로그인 페이지까지만 구현.
 
